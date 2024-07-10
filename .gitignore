@@ -77,7 +77,19 @@ target/
 .ipynb_checkpoints/
 
 # exclude data from source control by default
-/data/
+/data/*
+
+# exclude volumes from source control
+/volumes/airflow_logs/*
+!/volumes/airflow_logs/.gitkeep
+/volumes/dags/*
+!/volumes/dags/.gitkeep
+/volumes/db/*
+!/volumes/db/.gitkeep
+/volumes/db_admin/*
+!/volumes/db_admin/.gitkeep
+/volumes/models/*
+!/volumes/models/.gitkeep
 
 # Mac OS-specific storage files
 .DS_Store
