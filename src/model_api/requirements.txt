@@ -5,3 +5,5 @@ pydantic
 passlib
 pandas
 numpy
+pytest
+pytest-mock
