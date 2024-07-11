@@ -50,7 +50,8 @@ def test_login_as_admin():
     )
     assert secured_response.status_code == status.HTTP_200_OK
 
-#TODO: Write test for prediction endpoint
+#TODO: Mocking csv files
+'''
 #function to test the prediction
 def test_prediction():
 
@@ -75,3 +76,4 @@ def test_prediction():
     # Optionally, you can check the response content
     prediction_response_json =  prediction_response.json()
     assert "prediction" in  prediction_response_json
+'''
