@@ -1,12 +1,13 @@
 import os
 from fastapi.testclient import TestClient
 from fastapi import status
-import pickle
-from unittest.mock import patch, MagicMock
+# import pickle
+# from unittest.mock import patch, MagicMock
 from model_api import api, users_db, ADMIN_USERNAME, ADMIN_PASSWORD
 
 # Mocking the `pickle` module so no model needed for the unit tests
-mock_pickle_load = patch.object(pickle, "load", return_value=MagicMock()).start()
+# mock_pickle_load = patch.object(pickle, "load", return_value=MagicMock()).start()
+mocker.patch('pickle.load')
 
 os.environ['ADMIN_USERNAME'] = "the_admin_username"
 os.environ['ADMIN_PASSWORD'] = "the_admin_password"
