@@ -1,0 +1,8 @@
+uvicorn
+pickle
+pyjwt
+fastapi
+pydantic
+passlib
+pandas
+numpy
