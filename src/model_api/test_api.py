@@ -18,7 +18,6 @@ def test_health():
     response = client.get("/health")
     assert response.status_code == status.HTTP_200_OK
 
-
 def test_unauthorized_login():
     """Testing if secured endpoint doesnt work because it has no auth."""
     response = client.get("/secured")
@@ -30,14 +29,12 @@ def test_unknown_user_login():
     response = client.get("/secured", auth=UNKNOWN_USER)
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
-
 def test_login_with_known_user():
     """Testing the userlogin endpoint works with non admin."""
     response = client.post(
         "/user/login", json={"username": "testuser", "password": "testpassword"}
     )
     assert response.status_code == status.HTTP_200_OK
-
 
 def test_login_as_admin():
     """Testing the secured endpoint works with admin user."""

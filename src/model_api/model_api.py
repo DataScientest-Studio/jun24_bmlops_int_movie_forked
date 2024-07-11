@@ -124,6 +124,10 @@ api = FastAPI()
 async def get_health():
     return {"message": "Up and running!"}
 
+@api.get("/secured", dependencies=[Depends(JWTBearer())])
+async def secured():
+    return {"message": "Security check completed!"}
+
 # endpoint for user signup that registers new users and checks if user already exists
 @api.post("/user/signup")
 async def create_user(user: UserSchema = Body(...)):
