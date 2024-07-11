@@ -3,7 +3,6 @@ import pickle
 import uvicorn
 import time
 import jwt
-from pathlib import Path
 from fastapi import Request, HTTPException, Body, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
