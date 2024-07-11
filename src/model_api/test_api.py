@@ -6,8 +6,7 @@ from unittest.mock import patch, MagicMock
 from model_api import api, users_db, ADMIN_USERNAME, ADMIN_PASSWORD
 
 # Mocking the `pickle` module so no model needed for the unit tests
-# mock_pickle_load = patch.object(pickle, "load", return_value=MagicMock()).start()
-pickle.load = MagicMock()
+mock_pickle_load = patch.object(pickle, "load", return_value=MagicMock()).start()
 
 os.environ['ADMIN_USERNAME'] = "the_admin_username"
 os.environ['ADMIN_PASSWORD'] = "the_admin_password"
@@ -64,11 +63,11 @@ def test_login_as_admin():
     assert secured_response.status_code == status.HTTP_200_OK
 
 #TODO: Write test for prediction endpoint
-"""
 #function to test the prediction
-@patch("model_api.api.joblib")
+@patch("model_api.pickle")
 def test_prediction(load_model_mock):
-    #mocking the joblib predict function
+    """
+    #mocking the pickle predict function
     load_model_mock.predict.return_value = np.asarray([1])
 
     login_response = client.post("/user/login",json= {"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD})
@@ -92,4 +91,4 @@ def test_prediction(load_model_mock):
     # Optionally, you can check the response content
     prediction_response_json =  prediction_response.json()
     assert "prediction" in  prediction_response_json
-"""
+    """
