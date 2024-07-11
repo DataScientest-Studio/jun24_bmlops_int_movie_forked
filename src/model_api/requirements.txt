@@ -6,4 +6,4 @@ passlib
 pandas
 numpy
 pytest
-sklearn
+scikit-learn
