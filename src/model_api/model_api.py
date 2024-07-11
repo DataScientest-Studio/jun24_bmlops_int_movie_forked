@@ -3,6 +3,8 @@ import pickle
 import uvicorn
 import time
 import jwt
+import pandas as pd
+import numpy as np
 from fastapi import Request, HTTPException, Body, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -18,7 +20,9 @@ JWT_ALGORITHM = "HS256"
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
-MODEL_PATH = "../../models/model.pkl"
+MODEL_PATH = os.getenv("MODEL_PATH", "../../models") + "/model.pkl"
+USER_MATRIX_FILE = os.getenv("DATA_PATH", "../../data") + "/processed/user_matrix.csv"
+MOVIE_FILE = os.getenv("DATA_PATH", "../../data") + "/raw/movies.csv"
 
 pwd_context = CryptContext(
     schemes=["bcrypt"], bcrypt__default_rounds=12, deprecated="auto"
@@ -157,17 +161,18 @@ async def user_login(user: UserSchema = Body(...)):
     raise HTTPException(status_code=401, detail="Invalid username or password")
 
 #TODO: Prediction endpoint
-"""
-@api.post("/predict", dependencies=[Depends(JWTBearer())])
+@api.get("/predict/{user_id}", dependencies=[Depends(JWTBearer())])
 def predict_model(user_id: int):
-    users = "" #read UsersMatrix from DB
+    users = pd.read_csv(USER_MATRIX_FILE)
     user = users[users["userId"].isin([user_id])]
     user = user.drop("userId", axis=1)
-    _, indices = model.kneighbors(user)
-    # read movie titels from indices?
-    prediction = "List of movie titles?"
-    return {"prediction": prediction}
-"""
+    _, indices = loaded_model.kneighbors(user)
+    selection = np.array(
+        [np.random.choice(row, size=10, replace=False) for row in indices]
+    )
+    movies = pd.read_csv(MOVIE_FILE)
+    movies = movies[movies["movieId"].isin(selection[0])]
+    return {"prediction": movies["title"]}
 
 @api.get("/reload_model", dependencies=[Depends(JWTBearer())])
 def reload_model():

@@ -51,9 +51,8 @@ def test_login_as_admin():
     assert secured_response.status_code == status.HTTP_200_OK
 
 #TODO: Write test for prediction endpoint
-"""
 #function to test the prediction
-def test_prediction(load_model_mock):
+def test_prediction():
 
     login_response = client.post("/user/login",json= {"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD})
     assert login_response.status_code == status.HTTP_200_OK
@@ -64,11 +63,11 @@ def test_prediction(load_model_mock):
     access_token = login_data["access_token"]
 
     #this is the test User id
-    userId = 1
+    user_id = 1
 
     #defining the header with the previously created access token
     headers = {"Authorization": f"Bearer {access_token}"}
-    prediction_response = client.post("/predict", userId=userId, headers=headers)
+    prediction_response = client.get(f"/predict/{user_id}", headers=headers)
 
     # Assert the response status code to be 200
     assert prediction_response.status_code == status.HTTP_200_OK
@@ -76,4 +75,3 @@ def test_prediction(load_model_mock):
     # Optionally, you can check the response content
     prediction_response_json =  prediction_response.json()
     assert "prediction" in  prediction_response_json
-"""
