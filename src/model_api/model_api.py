@@ -18,7 +18,7 @@ JWT_ALGORITHM = "HS256"
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
-MODEL_PATH = "model.pkl"
+MODEL_PATH = "../../models/model.pkl"
 
 pwd_context = CryptContext(
     schemes=["bcrypt"], bcrypt__default_rounds=12, deprecated="auto"
