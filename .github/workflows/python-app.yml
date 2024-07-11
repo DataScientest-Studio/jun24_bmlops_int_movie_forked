@@ -16,7 +16,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      ADMIN_USERNAME: the_admin_username
+      ADMIN_PASSWORD: the_admin_password
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.12

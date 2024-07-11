@@ -1,10 +1,6 @@
-import os
 from fastapi.testclient import TestClient
 from fastapi import status
 from model_api import api, users_db, ADMIN_USERNAME, ADMIN_PASSWORD
-
-os.environ['ADMIN_USERNAME'] = "the_admin_username"
-os.environ['ADMIN_PASSWORD'] = "the_admin_password"
 
 client = TestClient(api)
 
