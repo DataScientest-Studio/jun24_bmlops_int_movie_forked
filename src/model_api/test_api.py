@@ -14,6 +14,7 @@ def test_health():
     response = client.get("/health")
     assert response.status_code == status.HTTP_200_OK
 
+
 def test_unauthorized_login():
     """Testing if secured endpoint doesnt work because it has no auth."""
     response = client.get("/secured")
