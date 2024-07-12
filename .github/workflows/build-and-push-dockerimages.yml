@@ -1,0 +1,25 @@
+name: Build and push Docker Images when manually triggered
+
+permissions:
+  contents: read
+
+jobs:
+  ModelAPI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to the Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: jun24movierec
+          password: ${{ secrets.DOCKER_HUB_PASS }}
+
+      - name: Build and push the model_api Docker image to the jun24movierec DockerHub
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/model_api
+          file: ./src/model_api/Dockerfile
+          push: true
+          tags: jun24movierec/model_api:latest, jun24movierec/model_api:0.${{ github.run_number }}
