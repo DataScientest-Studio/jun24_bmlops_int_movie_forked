@@ -21,7 +21,7 @@ x-airflow-common: &airflow-common
   volumes:
     - ./volumes/dags:/opt/airflow/dags
     - ./volumes/airflow_logs:/opt/airflow/logs
-    - -/volumes/models:/models
+    - ./volumes/models:/models
     - type: bind
       source: ./data/processed
       target: /app/processed_data
