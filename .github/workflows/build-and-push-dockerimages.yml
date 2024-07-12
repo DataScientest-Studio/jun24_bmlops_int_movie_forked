@@ -1,9 +1,6 @@
 name: Build and push Docker Images when manually triggered
 
-# as we need to provide something here
-on:
-  release:
-    types: [published]
+on: workflow_dispatch
 
 permissions:
   contents: read
