@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 from fastapi import status
 from model_api import api, users_db, ADMIN_USERNAME, ADMIN_PASSWORD
+from unittest.mock import patch
 
 client = TestClient(api)
 
@@ -51,10 +52,17 @@ def test_login_as_admin():
     )
     assert secured_response.status_code == status.HTTP_200_OK
 
-#TODO: Mocking csv files
-'''
-#function to test the prediction
-def test_prediction():
+
+#function to test the prediction endpoint
+@patch('model_api.get_user_data_from_file')
+@patch('model_api.loaded_model.kneighbors')
+@patch('model_api.get_ten_movie_titles_from_file')
+def test_prediction(mock_user_data, mock_predict, mock_movie_data):
+
+    #mocking csv data and model prediction
+    mock_user_data = ""
+    mock_predict.return_value = "", ""
+    mock_movie_data = ""
 
     login_response = client.post("/user/login",json= {"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD})
     assert login_response.status_code == status.HTTP_200_OK
@@ -77,4 +85,3 @@ def test_prediction():
     # Optionally, you can check the response content
     prediction_response_json =  prediction_response.json()
     assert "prediction" in  prediction_response_json
-'''

@@ -143,7 +143,7 @@ async def create_user(user: UserSchema = Body(...)):
 
 
 # endpoint for user login that authenticates by checking if users are admin or signed up in the user database,
-# veryfiys username and password and returns a JWT token
+# veryfies username and password and returns a JWT token
 @api.post("/user/login")
 async def user_login(user: UserSchema = Body(...)):
     if ADMIN_USERNAME is None or ADMIN_PASSWORD is None:
@@ -160,19 +160,12 @@ async def user_login(user: UserSchema = Body(...)):
         return sign_jwt(user.username)
     raise HTTPException(status_code=401, detail="Invalid username or password")
 
-#TODO: Prediction endpoint
 @api.get("/predict/{user_id}", dependencies=[Depends(JWTBearer())])
 def predict_model(user_id: int):
-    users = pd.read_csv(USER_MATRIX_FILE)
-    user = users[users["userId"].isin([user_id])]
-    user = user.drop("userId", axis=1)
+    user = get_user_data_from_file(user_id)
     _, indices = loaded_model.kneighbors(user)
-    selection = np.array(
-        [np.random.choice(row, size=10, replace=False) for row in indices]
-    )
-    movies = pd.read_csv(MOVIE_FILE)
-    movies = movies[movies["movieId"].isin(selection[0])]
-    return {"prediction": movies["title"]}
+    movie_titles = get_ten_movie_titles_from_file(indices)
+    return {"prediction": movie_titles}
 
 @api.get("/reload_model", dependencies=[Depends(JWTBearer())])
 def reload_model():
@@ -181,6 +174,19 @@ def reload_model():
     loaded_model = load_model()
     return {"message": "The Model was updated!"}
 
+def get_user_data_from_file(user_id):
+    users = pd.read_csv(USER_MATRIX_FILE)
+    user = users[users["userId"].isin([user_id])]
+    user = user.drop("userId", axis=1)
+    return user
+
+def get_ten_movie_titles_from_file(indices):
+    selection = np.array(
+        [np.random.choice(row, size=10, replace=False) for row in indices]
+    )
+    movies = pd.read_csv(MOVIE_FILE)
+    movies = movies[movies["movieId"].isin(selection[0])]
+    return movies["title"]
 
 if __name__ == "__main__":
 
