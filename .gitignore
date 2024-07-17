@@ -84,6 +84,7 @@ target/
 !/volumes/airflow_logs/.gitkeep
 /volumes/dags/*
 !/volumes/dags/.gitkeep
+!/volumes/dags/airflow.py
 /volumes/db/*
 !/volumes/db/.gitkeep
 /volumes/db_admin/*
