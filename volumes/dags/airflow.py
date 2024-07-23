@@ -68,10 +68,10 @@ with DAG(
         return pd.read_sql_table(table_name, engine)
     
     def trigger_api_reload_model():
-        login_response = requests.post("/user/login",json= {"username": "admin", "password": "admin"}).json()
+        login_response = requests.post("localhost:8889/user/login",json= {"username": "admin", "password": "admin"}).json()
         access_token = login_response["access_token"]
         headers = {"Authorization": f"Bearer {access_token}"}
-        requests.get(f"/reload_model", headers=headers)
+        requests.get("localhost:8889/reload_model", headers=headers)
 
 
     def preprocess_new_data():
