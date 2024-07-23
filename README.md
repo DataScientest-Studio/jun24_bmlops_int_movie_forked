@@ -1,54 +1,69 @@
-Project Name
+🎬 Movie Recommendation System
+==============================
+The Movie Recommendation System develops a movie recommendation system for a streaming platform. The recommendation system leverages collaborative filtering techniques, utilizing user ratings and movie genre data to generate personalized movie recommendations.
+
+This project is a comprehensive MLOps implementation designed to enhance user experience by suggesting movies that align with individual tastes. This project is based on [the MovieLens 20M Dataset](https://grouplens.org/datasets/movielens/20m/).
+
+👨🏼‍💻👩‍💻👨🏻‍💻 Development Team
+==============================
+The Movie Recommendation System has been developed by:
+
+    -Dennis Rothfuss
+    -Eva Losada Barreiro
+
+🏗️ Architecture
 ==============================
 
-This project is a starting Pack for MLOps projects based on the subject "movie_recommandation". It's not perfect so feel free to make some modifications on it.
 
-Project Organization
-------------
+📂 Project Organization
+==============================
 
-    ├── LICENSE
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── logs               <- Logs from training and predicting
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   ├── check_structure.py    
-    │   │   ├── import_raw_data.py 
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   ├── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │   │   └── visualize.py
-    │   └── config         <- Describe the parameters used in train_model.py and predict_model.py
+```plaintext
+.github/
+├── workflows/
+│   ├── build-and-push-dockerimages.yml
+│   └── python-app.yml
+models/
+├── .gitkeep
+├── model.pkl
+notebooks/
+├── .gitkeep
+references/
+├── .gitkeep
+reports/
+├── figures/
+│   └── .gitkeep
+src/
+├── data/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   ├── check_structure.py
+│   ├── import_raw_data.py
+│   └── make_dataset.py
+├── features/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   └── build_features.py
+├── model_api/
+│   ├── Dockerfile
+│   ├── model_api.py
+│   ├── requirements.txt
+│   └── test_api.py
+├── models/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   ├── predict_model.py
+│   └── train_model.py
+├── visualization/
+│   ├── __init__.py
+│   └── config
+volumes/
+├── .gitignore
+├── LICENSE
+├── README.md
+├── docker-compose.yml
+├── requirements.txt
+└── setup.py
 
 --------
 
