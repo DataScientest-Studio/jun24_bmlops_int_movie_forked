@@ -21,7 +21,7 @@ The Movie Recommendation System has been developed by:
 </p>
 
 To be able to map the whole workflow and lifecycle of a MLOPS project we decided to use the following systems and modules:
-* We build a custom Rest API for the predictions called Model_API using python and FastAPI.
+* We build a custom Rest API for the recommendations (model predictions) called Model_API using python and FastAPI.
 * To ensure that the functionality still works after doing changes we have built a CI pipeline with GitHub Actions which runs the unit tests after every code change.
 * As we use Docker to build our environment we also created a CD pipeline which builds a docker image for the Model_API and uploads the image to DockerHub.
 * To run the whole environment we are using Docker-Compose with several containers, including our Model_API container as well as a DB container, a PGAdmin container (GUI for our DB) and several Airflow Containers.
