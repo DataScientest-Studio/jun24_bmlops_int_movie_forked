@@ -18,7 +18,7 @@ The Movie Recommendation System has been developed by:
 📂 Project Organization
 ==============================
 
-```plaintext
+```
 .github/
 ├── workflows/
 │   ├── build-and-push-dockerimages.yml
@@ -64,7 +64,7 @@ volumes/
 ├── docker-compose.yml
 ├── requirements.txt
 └── setup.py
-
+```
 --------
 
 ## Steps to follow 
