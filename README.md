@@ -1,93 +1,124 @@
-Project Name
+🎬 Movie Recommendation System
+==============================
+The Movie Recommendation System develops a movie recommendation system for a streaming platform. The recommendation system leverages collaborative filtering techniques, utilizing user ratings and movie genre data to generate personalized movie recommendations.
+
+This project is a comprehensive MLOps implementation designed to enhance user experience by suggesting movies that align with individual tastes. This project is based on [the MovieLens 20M Dataset](https://grouplens.org/datasets/movielens/20m/).
+
+👨🏼‍💻👩‍💻👨🏻‍💻 Development Team
+==============================
+The Movie Recommendation System has been developed by:
+
+    -Dennis Rothfuss
+    -Eva Losada Barreiro
+
+🏗️ Architecture
+==============================
+To be able to map the whole workflow and lifecycle of a MLOPS project we decided to use the following systems and modules:
+* We build a custom Rest API for the predictions called Model_API using python and FastAPI.
+* To ensure that the functionality still works after doing changes we have built a CI pipeline with GitHub Actions which runs the unit tests after every code change.
+* As we use Docker to build our environment we also created a CD pipeline which builds a docker image for the Model_API and uploads the image to DockerHub.
+* To run the whole environment we are using Docker-Compose with several containers, including our Model_API container as well as a DB container, a PGAdmin container (GUI for our DB) and several Airflow Containers.
+* To preprocess new raw data and to retrain our Model we created a workflow in Airflow which processed the new data, stores it in our Database, retrains the model and replaces the old model if the new models performs better.
+* Replacing the model in the API is done without interruption as we are using a shared volume between Airflow and the Model_API and then triggering the API to just load the new model while running.
+
+📂 Project Organization
 ==============================
 
-This project is a starting Pack for MLOps projects based on the subject "movie_recommandation". It's not perfect so feel free to make some modifications on it.
+```
+.github/
+├── workflows/
+│   ├── build-and-push-dockerimages.yml
+│   └── python-app.yml
+models/
+├── .gitkeep
+├── model.pkl
+notebooks/
+├── .gitkeep
+references/
+├── .gitkeep
+reports/
+├── figures/
+│   └── .gitkeep
+src/
+├── data/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   ├── check_structure.py
+│   ├── import_raw_data.py
+│   └── make_dataset.py
+├── features/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   └── build_features.py
+├── model_api/
+│   ├── Dockerfile
+│   ├── model_api.py
+│   ├── requirements.txt
+│   └── test_api.py
+├── models/
+│   ├── .gitkeep
+│   ├── __init__.py
+│   ├── predict_model.py
+│   └── train_model.py
+├── visualization/
+│   ├── __init__.py
+│   └── config
+volumes/
+├── .gitignore
+├── LICENSE
+├── README.md
+├── docker-compose.yml
+├── requirements.txt
+└── setup.py
+```
 
-Project Organization
-------------
+👩‍💻 Development
+==============================
+Running the `Model_API` application in `development` mode means to run the application locally without using Docker.
+To run the application in `development` mode you need to follow the following steps:
 
-    ├── LICENSE
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── logs               <- Logs from training and predicting
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   ├── check_structure.py    
-    │   │   ├── import_raw_data.py 
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   ├── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │   │   └── visualize.py
-    │   └── config         <- Describe the parameters used in train_model.py and predict_model.py
+### 1- Create a virtual environment using Virtualenv
 
---------
+    python -m venv my_env
+    . my_env/Scripts/activate
 
-## Steps to follow 
+### 2- Install the packages from requirements.txt
 
-Convention : All python scripts must be run from the root specifying the relative file path.
+    pip install -r requirements.txt
+    pip install -r src/model_api/requirements.txt 
 
-### 1- Create a virtual environment using Virtualenv.
+### 3- Execute import_raw_data.py to import the 4 datasets (say yes when it asks you to create a new folder)
 
-    `python -m venv my_env`
+    python src/data/import_raw_data.py 
 
-###   Activate it 
+### 4- Set the necessary environment variables
 
-    `./my_env/Scripts/activate`
+    export ADMIN_USERNAME=admin
+    export ADMIN_PASSWORD=admin
 
-###   Install the packages from requirements.txt  (You can ignore the warning with "setup.py")
+### 5- Start the Model_API application (from the model_api src folder)
 
-    `pip install -r .\requirements.txt`
+    cd src/model_api
+    python model_api.py
 
-### 2- Execute import_raw_data.py to import the 4 datasets (say yes when it asks you to create a new folder)
+### 6- After starting the application the Rest API Documentation is available here: [Model_API](http://localhost:8000/docs)
 
-    `python .\src\data\import_raw_data.py` 
+### To adjust the workflow we have built in airflow you can change the DAG developed in `volumes/dags/airflow.py`
 
-### 3- Execute make_dataset.py initializing `./data/raw` as input file path and `./data/processed` as output file path.
+👟 Running the App
+==============================
+Running the application in our `production` like environment means to run it using the docker-compose environment we build.
+To run the application and the airflow workflow you can follow the following steps:
 
-    `python .\src\data\make_dataset.py`
+### 1- Download the images, setup the environment and start the containers
 
-### 4- Execute build_features.py to preprocess the data (this can take a while)
+    docker-compose up -d
 
-    `python .\src\features\build_features.py`
+### 2- Access the services using the following links
+1. [Model_API](http://localhost:8889/docs)
+2. [PGAdmin](http://localhost:8888)
+3. [Airflow](http://localhost:8080)
+4. [Airflow Celery Flower](http://localhost:5555)
 
-### 5- Execute train_model.py to train the model
-
-    `python .\src\models\train_model.py`
-
-### 5- Finally, execute predict_model.py file to make the predictions (by default you will be printed predictions for the first 5 users of the dataset). 
-
-    `python .\src\models\predict_model.py`
-
-### Note that we have 10 recommandations per user
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+### 3- To be able to run the airflow workflow (DAG name: `data_model_pipeline`)
+Go to the admin -> connections tab and add a new connection. The connection id needs to be set to `file_system` and the type to `File [Path]`, then save the connection.
