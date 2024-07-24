@@ -13,6 +13,13 @@ The Movie Recommendation System has been developed by:
 
 🏗️ Architecture
 ==============================
+<p align="center">
+    <img src="./references/Architecture.png" />
+</p>
+<p align="center">
+    <b>Figure 1.</b> Movie Recommendation System architecture
+</p>
+
 To be able to map the whole workflow and lifecycle of a MLOPS project we decided to use the following systems and modules:
 * We build a custom Rest API for the predictions called Model_API using python and FastAPI.
 * To ensure that the functionality still works after doing changes we have built a CI pipeline with GitHub Actions which runs the unit tests after every code change.
