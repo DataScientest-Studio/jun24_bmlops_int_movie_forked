@@ -13,7 +13,7 @@ The Movie Recommendation System has been developed by:
 
 🏗️ Architecture
 ==============================
-
+TODO
 
 📂 Project Organization
 ==============================
@@ -65,6 +65,15 @@ volumes/
 ├── requirements.txt
 └── setup.py
 ```
+
+👩‍💻 Development
+==============================
+TODO
+
+👟 Running the App
+==============================
+TODO
+
 --------
 
 ## Steps to follow 
