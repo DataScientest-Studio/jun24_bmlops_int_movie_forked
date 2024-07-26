@@ -71,12 +71,24 @@ src/
 │   ├── __init__.py
 │   └── config
 volumes/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── docker-compose.yml
-├── requirements.txt
-└── setup.py
+├── airflow_logs/
+│   └── .gitkeep
+├── dags/
+│   ├── .gitkeep
+│   └── airflow.py
+├── db/
+│   └── .gitkeep
+├── db_admin/
+│   └── .gitkeep
+├── models
+│   └── .gitkeep
+.gitignore
+LICENSE
+README.md
+docker-compose.yml
+requirements.txt
+setup.py
+
 ```
 
 👩‍💻 Development
